@@ -11,7 +11,7 @@ npm install @jamsch/hacker-news-client
 ## Usage
 
 ```javascript
-import Client, { Story } from '@jamsch/hacker-news-client';
+import Client from '@jamsch/hacker-news-client';
 
 // Fetch the top 500 story IDs
 const topStories = await Client.getTopStories();
@@ -68,27 +68,27 @@ console.log(topFiveStories); // Story[]
 
 // Alternatively, use a switch statement to figure out the type
 switch (item.type) {
-  case "story": {
-    console.log("Ask | Story:", item); // Ask | Story
-    if ("text" in item) {
-      console.log("Ask:", item); // Ask
+  case 'story': {
+    console.log('Ask | Story:', item); // Ask | Story
+    if ('text' in item) {
+      console.log('Ask:', item); // Ask
     }
-    if ("url" in item) {
-      console.log("Story:", item); // Story
+    if ('url' in item) {
+      console.log('Story:', item); // Story
     }
     break;
   }
-  case "comment":
-    console.log("Comment:", item); // Comment
+  case 'comment':
+    console.log('Comment:', item); // Comment
     break;
-  case "job":
-    console.log("Job:", item); // Job
+  case 'job':
+    console.log('Job:', item); // Job
     break;
-  case "poll":
-    console.log("Poll:", item); // Poll
+  case 'poll':
+    console.log('Poll:', item); // Poll
     break;
-  case "pollopt":
-    console.log("Polopt", item); // PolOpt
+  case 'pollopt':
+    console.log('Polopt', item); // PolOpt
     break;
 }
 
