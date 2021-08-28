@@ -50,6 +50,23 @@ const item = await Client.getItem(1); // "Item" type
 
 console.log(item); // Item (Story | Comment | Ask | Job | Poll | PollOpt)
 
+// Check what kind of item it is
+if (Client.is(item, 'story')) {
+  console.log(item); // Story
+} else if (Client.is(item, 'ask')) {
+  console.log(item); // Ask
+}
+
+// If you know the item ID belongs to a specific item type:
+const storyId = 123;
+const storyItem = await Client.getItem<Story>(storyId);
+console.log(storyItem); // Story
+
+const storyIds = [1,2,3,4];
+const topFiveStories = await Client.getItems<Story>(storyIds);
+console.log(topFiveStories); // Story[]
+
+// Alternatively, use a switch statement to figure out the type
 switch (item.type) {
   case "story": {
     console.log("Ask | Story:", item); // Ask | Story
@@ -75,14 +92,6 @@ switch (item.type) {
     break;
 }
 
-// If you know the item ID belongs to a specific item type:
-const storyId = 123;
-const storyItem = await Client.getItem<Story>(storyId);
-console.log(storyItem); // Story
-
-const storyIds = [1,2,3,4];
-const topFiveStories = await Client.getItems<Story>(storyIds);
-console.log(topFiveStories); // Story[]
 ```
 
 

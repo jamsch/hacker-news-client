@@ -1,4 +1,4 @@
-import type { Item, User, Updates } from "./typings/types";
+import type { Item, User, Updates, Story, Poll, PollOpt, Job, Ask, Comment } from "./typings/types";
 
 export * from "./typings/types";
 
@@ -10,7 +10,22 @@ const get = <T>(uri: string): Promise<T> =>
     return res.json();
   });
 
+type ItemMap = {
+  story: Story;
+  comment: Comment;
+  poll: Poll;
+  pollopt: PollOpt;
+  job: Job;
+  ask: Ask;
+};
+
 const API = {
+  is<TType extends keyof ItemMap>(item: Item, type: TType): item is ItemMap[TType] {
+    if (type === "ask") {
+      return "text" in item;
+    }
+    return item.type === type;
+  },
   /** Fetches up to 500 top and new stories */
   getTopStories(): Promise<number[]> {
     return get("topstories.json");
@@ -49,32 +64,5 @@ const API = {
     return get("updates.json");
   },
 };
-
-API.getItem(1).then((item) => {
-  switch (item.type) {
-    case "comment":
-      console.log("Comment:", item); // Comment
-      break;
-    case "job":
-      console.log("Job:", item); // Job
-      break;
-    case "story": {
-      console.log("Ask | Story:", item); // Story | Ask
-      if ("text" in item) {
-        console.log("Ask:", item); // Ask
-      }
-      if ("url" in item) {
-        console.log("Story:", item); // Story
-      }
-      break;
-    }
-    case "poll":
-      console.log("Poll:", item); // Poll
-      break;
-    case "pollopt":
-      console.log("Polopt", item); // PolOpt
-      break;
-  }
-});
 
 export default API;
